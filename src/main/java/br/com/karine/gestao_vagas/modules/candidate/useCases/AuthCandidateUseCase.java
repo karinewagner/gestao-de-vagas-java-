@@ -2,7 +2,6 @@ package br.com.karine.gestao_vagas.modules.candidate.useCases;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.naming.AuthenticationException;
