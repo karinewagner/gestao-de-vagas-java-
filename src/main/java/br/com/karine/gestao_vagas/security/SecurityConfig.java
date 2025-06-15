@@ -15,13 +15,18 @@ public class SecurityConfig {
     @Autowired
     private SecurityFilter securityFilter;
 
+    private static final String[] PUBLIC_ENDPOINTS = {
+        "/candidate/",
+        "/company/",
+        "/auth/company",
+        "/auth/candidate"
+    };
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> {
-                auth.requestMatchers("/candidate/").permitAll()
-                .requestMatchers("/company/").permitAll()
-                .requestMatchers("/auth/company").permitAll();
+                auth.requestMatchers(PUBLIC_ENDPOINTS).permitAll();
                 auth.anyRequest().authenticated();
             })
             .addFilterBefore(securityFilter, BasicAuthenticationFilter.class);

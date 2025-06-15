@@ -20,7 +20,7 @@ import br.com.karine.gestao_vagas.modules.company.repositories.CompanyRepository
 @Service
 public class AuthCompanyUseCase {
 
-    @Value("${security.token.secret}")
+    @Value("${security.token.secret.company}")
     private String secretKey;
 
     @Autowired
@@ -30,11 +30,10 @@ public class AuthCompanyUseCase {
     private PasswordEncoder passwordEncoder;
 
     public String excecute(AuthCompanyDTO authCompanyDTO) throws AuthenticationException {
-        var company = this.companyRepository.findByUsername(authCompanyDTO.getUsername()).orElseThrow(
-            () -> {
+        var company = this.companyRepository.findByUsername(authCompanyDTO.getUsername())
+            .orElseThrow(() -> {
                 throw new UsernameNotFoundException("Usuário e/ou senha incorreta.");
-            }
-        );
+            });
 
         var passwordMatches = this.passwordEncoder.matches(authCompanyDTO.getPassword(), company.getPassword()); 
         
