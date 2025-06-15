@@ -24,7 +24,7 @@ public class AuthCompanyController {
             var result = this.authCompanyUseCase.excecute(authCompanyDTO);
             return ResponseEntity.ok().body(result);
         } catch(Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário e/ou senha incorreta.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
     
