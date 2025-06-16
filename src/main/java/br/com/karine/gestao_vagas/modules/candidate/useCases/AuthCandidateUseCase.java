@@ -51,7 +51,7 @@ public class AuthCandidateUseCase {
             .withIssuer("gestao_vagas")
             .withExpiresAt(expiresIn)
             .withSubject(candidate.getId().toString())
-            .withClaim("roles", Arrays.asList("candidate"))
+            .withClaim("roles", Arrays.asList("CANDIDATE"))
             .sign(algorithm);
         
         var authCandidateResponse = AuthCandidateResponseDTO
