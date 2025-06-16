@@ -20,6 +20,7 @@ public class CompanyController {
 
     @PostMapping("/")
     public ResponseEntity<Object> create(@Valid @RequestBody CompanyEntity companyEntity) {
+        
         try {
             var result = this.createCompanyUseCase.execute(companyEntity);
             return ResponseEntity.ok().body(result);
