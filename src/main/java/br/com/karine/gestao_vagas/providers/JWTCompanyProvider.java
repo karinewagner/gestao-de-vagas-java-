@@ -8,12 +8,13 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 
 @Service
-public class JWTProvider {
+public class JWTCompanyProvider {
 
     @Value("${security.token.secret.company}")
     private String secretKey;
 
     public String ValidateToken(String token) {
+        
         token = token.replace("Bearer ", "");
 
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
