@@ -24,7 +24,10 @@ public class SecurityConfig {
         "/company/",
         "/candidate/",
         "/company/auth",
-        "/candidate/auth"
+        "/candidate/auth",
+        "/swagger-ui/**",
+        "/swagger-resources/**",
+        "/v3/api-docs/**",
     };
 
     @Bean
