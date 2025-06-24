@@ -1,9 +1,11 @@
-package br.com.karine.gestao_vagas.modules.company.entities;
+package br.com.karine.gestao_vagas.modules.candidate.entities;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import br.com.karine.gestao_vagas.modules.company.entities.JobEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,24 +24,27 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "job")
-public class JobEntity {
+@Entity(name = "applay_jobs")
+public class ApplyJobEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @ManyToOne
+    @JoinColumn(name = "candidate_id", insertable = false, updatable = false)
+    private CandidateEntity candidateEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "job_id", insertable = false, updatable = false)
+    private JobEntity jobEntity;
+
+    @Column(name = "candidate_id")
+    private UUID candidateId;
     
-    private String description;
-    private String level;
-    private String benefits;
-
-    @ManyToOne()
-    @JoinColumn(name = "company_id", insertable = false, updatable = false)
-    private CompanyEntity companyEntity;
-
-    @Column(name = "company_id")
-    private UUID companyId;
-
+    @Column(name = "job_id")
+    private UUID jobId;
+    
     @CreationTimestamp
     private LocalDateTime createdAt;
 }
