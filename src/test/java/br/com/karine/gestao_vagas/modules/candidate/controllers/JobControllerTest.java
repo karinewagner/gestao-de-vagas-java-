@@ -1,5 +1,10 @@
 package br.com.karine.gestao_vagas.modules.candidate.controllers;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
+
+import java.util.UUID;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -17,6 +22,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import br.com.karine.gestao_vagas.exceptions.CompanyNotFoundException;
 import br.com.karine.gestao_vagas.modules.company.dto.CreateJobDTO;
 import br.com.karine.gestao_vagas.modules.company.entities.CompanyEntity;
 import br.com.karine.gestao_vagas.modules.company.repositories.CompanyRepository;
@@ -72,5 +78,27 @@ public class JobControllerTest {
                 .content(TestUtils.objectToJson(createdJobDTO))
                 .header("Authorization", TestUtils.generateToken(company.getId(), "GESTAO_VAGAS@2025#COMPANY"))
             ).andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    @DisplayName("não deve ser possível criar uma vaga, se a empresa não for encontrada")
+    public void shouldNotBeAbleToCreateANewJobIfCompanyNotFound() throws Exception {
+        
+        var createdJobDTO = CreateJobDTO
+            .builder()
+            .benefits("benefits_test")
+            .description("description_test")
+            .level("level_test")
+            .build();
+
+
+        mvc.perform(
+            MockMvcRequestBuilders
+                .post("/company/job/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(TestUtils.objectToJson(createdJobDTO))
+                .header("Authorization", TestUtils.generateToken(UUID.randomUUID(), "GESTAO_VAGAS@2025#COMPANY"))
+        ).andExpect(MockMvcResultMatchers.status().isBadRequest());
+
     }
 }
