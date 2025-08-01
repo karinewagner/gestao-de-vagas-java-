@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "applay_jobs")
+@Entity(name = "apply_jobs")
 public class ApplyJobEntity {
     
     @Id
